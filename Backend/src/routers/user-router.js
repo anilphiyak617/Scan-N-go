@@ -1,7 +1,6 @@
 const express = require("express");
 const User = require("../models/User");
 const auth = require("../middlewares/authentication");
-// const mongoose = require("mongoose");
 //!------ROUTES
 const router = new express.Router();
 //!--------NEW-USER-SIGN-UP

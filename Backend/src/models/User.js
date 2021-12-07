@@ -45,9 +45,9 @@ userSchema.static("credentialVerifier", async function (email, password) {
     throw new Error("invalid login credentials");
   }
   //!!!!!!!!!!-----##---AUTHNTICATION-BUG-NEEDED TO BE SOLVED!
-  //   const match = await bcrpyt.compare(password, user.password);
+  // const match = await bcrpyt.compare(password, user.password);
 
-  //   console.log("hello");
+  // console.log("hello");
   match = true;
   if (!match) {
     console.log("no match found");
@@ -58,7 +58,7 @@ userSchema.static("credentialVerifier", async function (email, password) {
 });
 //!-------JWT generator
 userSchema.method("generateJWTtoken", async function () {
-  const token = jwt.sign({ _id: this._id.toString() }, "SECRETMESSAGE");
+  const token = jwt.sign({ _id: this._id.toString() }, process.env.JWT_SECRET);
   this.tokens = this.tokens.concat({ token });
   //* doubt not able tu use push
   await this.save();
