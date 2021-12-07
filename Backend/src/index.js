@@ -1,22 +1,16 @@
-
-
-
 require("./db/mongoose");
-const express=require('express');
-const app=express();
+const express = require("express");
+const app = express();
+const User = require("./models/User");
+const userRouter = require("./routers/user-router");
 //!-------PORT
-const port = process.env.PORT || 7000;
-//--------PARSING incomng data to JSON
+const port = process.env.PORT;
+//!--------PARSING incomng data to JSON
 app.use(express.json());
-//!-------Creating endpoints
-app.get('',async (req,res)=>{
-console.log(req.query);
-res.send("Sucefuslly running")
-})
 
-//!-------listening to the port
-app.listen(port,()=>{
-   console.log(`listening at port ${port}`);
+//!--------ROUTERS
+app.use(userRouter);
+//!-------LISTENING to the port
+app.listen(port, () => {
+  console.log(`listening at port ${port}`);
 });
-
-//arnold#@game@2020

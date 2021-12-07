@@ -1,12 +1,13 @@
-const mongoose=require('mongoose');
-const chalk=require('chalk');
+const mongoose = require("mongoose");
 //!Connecting to the MongoDB server
-mongoose.connect("mongodb://localhost:27017/Scan-N-go-api",{
-   // useUrlparser:true,
-   // useCreateIndex:true,
-}).then(result=>{
-    console.log(chalk`{inverse {green  Connected}}`);
-})
-.catch(err=>{
+mongoose
+  .connect(process.env.MONGODB_URL, {
+    // useUrlparser:true,
+    // useCreateIndex:true,
+  })
+  .then((result) => {
+    console.log("--------------------connected");
+  })
+  .catch((err) => {
     console.log(err);
-})
+  });
