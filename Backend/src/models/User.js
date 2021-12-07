@@ -37,6 +37,25 @@ const userSchema = new mongoose.Schema({
     },
   ],
 });
+//!----CREDENTIALS-verification
+userSchema.static("credentialVerifier", async function (email, password) {
+  const user = await this.findOne({ email });
+  if (!user) {
+    console.log("no user found");
+    throw new Error("invalid login credentials");
+  }
+  //!!!!!!!!!!-----##---AUTHNTICATION-BUG-NEEDED TO BE SOLVED!
+  //   const match = await bcrpyt.compare(password, user.password);
+
+  //   console.log("hello");
+  match = true;
+  if (!match) {
+    console.log("no match found");
+
+    throw new Error("Invalid Login Credtials");
+  }
+  return user;
+});
 //!-------JWT generator
 userSchema.method("generateJWTtoken", async function () {
   const token = jwt.sign({ _id: this._id.toString() }, "SECRETMESSAGE");
@@ -44,6 +63,18 @@ userSchema.method("generateJWTtoken", async function () {
   //* doubt not able tu use push
   await this.save();
   return token;
+});
+//!---------HASHING THE PASSWORD
+userSchema.pre("save", async function (next) {
+  if (this.isModified("password")) {
+    const hashedPassword = await bcrypt.hash(this.password, 8);
+    this.password = hashedPassword;
+  }
+  next();
+});
+// Inventory deleter when profile is removed
+userSchema.pre("remove", async function (next) {
+  next();
 });
 
 //!---------------CREATING the model
