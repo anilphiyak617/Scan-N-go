@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 const User = require("./models/User");
 const userRouter = require("./routers/user-router");
+const inventoryRouter = require("./routers/inventory-router");
 const bcrypt = require("bcryptjs");
 //!-------PORT
 const port = process.env.PORT;
@@ -11,6 +12,7 @@ app.use(express.json());
 
 //!--------ROUTERS
 app.use(userRouter);
+app.use(inventoryRouter);
 //!-------LISTENING to the port
 app.listen(port, () => {
   console.log(`listening at port ${port}`);
